@@ -13,11 +13,9 @@ export function Home(){
     const [boardSpace, setBoardSpace] = useState(board.getBoardSpace());
 
     const piece = new Piece(
-        formatsPieces[0].id, 
+        formatsPieces[1].id, 
         TColors.blue, 
-        formatsPieces[0].formats, 
-        formatsPieces[0].formats[0]
-    )
+        formatsPieces[1].format)
 
     const handleAddPieceOnBoard = () => {
         board.addPieceOnBoard(piece)
@@ -28,6 +26,7 @@ export function Home(){
 
     const handleChangeFormatPiece = () => {
         piece.swapCurrentFormat()
+        console.log(piece.getCurrentFormat())
     }
 
     return <Container>

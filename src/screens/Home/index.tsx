@@ -6,16 +6,19 @@ import { Piece } from "../../engine/Piece";
 import { TColors } from "../../types/TColors";
 import { formatsPieces } from "../../mocks/pieces";
 import { Text, TouchableOpacity } from "react-native";
+import { swapCurrentFormat } from "../../utils/swapCurrentFormat";
+import { isValidPosition } from "../../utils/isValidPosition";
 
 export function Home(){
     const board = new Board([], [], 1, false, 1);
     board.createBoard();
     const [boardSpace, setBoardSpace] = useState(board.getBoardSpace());
-
+    
     const piece = new Piece(
         formatsPieces[1].id, 
         TColors.blue, 
         formatsPieces[1].format)
+    const [pieceFormat, setPieceFormat] = useState(piece.getCurrentFormat())
 
     const handleAddPieceOnBoard = () => {
         board.addPieceOnBoard(piece)
@@ -25,8 +28,16 @@ export function Home(){
     }
 
     const handleChangeFormatPiece = () => {
-        piece.swapCurrentFormat()
-        console.log(piece.getCurrentFormat())
+        const newFormat = swapCurrentFormat(piece.getCurrentFormat())
+        const position = {
+            x: 0,
+            y: 0
+        }
+        const isValid = isValidPosition(boardSpace, newFormat, position)
+        if(isValid){
+            console.log(newFormat)
+            setPieceFormat(newFormat)
+        }
     }
 
     return <Container>
